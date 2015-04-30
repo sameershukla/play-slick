@@ -1,0 +1,14 @@
+GET /           controllers.Application.index
+PUT /position   controllers.Application.reposition
+
+GET /assets/*file    controllers.Assets.at(path="/public", file)
+GET /webjars/*file   controllers.WebJarAssets.at(file)
+
+
+GET /details         controllers.ApplicationController.find
+
+GET /address/:name   controllers.ApplicationController.findAddressByUserName(name: String)
+
+DELETE /detail/:name controllers.ApplicationController.removeDetails(name: String)
+
+POST /detail         controllers.ApplicationController.insert
