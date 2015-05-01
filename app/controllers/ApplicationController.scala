@@ -1,26 +1,18 @@
 package controllers
 
 import play.api.mvc.Controller
-import models.db.Person
 import play.api.libs.json._
 import play.api.libs.json.JsPath
-import models.db.Address
 import daos.PeopleAddress
 import play.api.mvc.Action
 import daos.DAO
 import scala.util.Success
 import scala.util.Failure
 import models.db.Response
-import models.db.Person
 import play.api.libs.functional.syntax._
 import models.db.Person
 import models.db.Address
-import models.db.Person
-import models.db.Address
 import scala.collection.mutable.ListBuffer
-import daos.PeopleAddress
-import daos.PeopleAddress
-import daos.PeopleAddress
 import java.sql.SQLException
 
 object ApplicationController extends Controller {
