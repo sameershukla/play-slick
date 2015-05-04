@@ -1,4 +1,4 @@
-This repo shows how Play and Slick integration works. It's 1-1 relationship between class Person and Address, Sample JSON required for input is 
+This project demo's RESTful service using Play and Slick FRM (ORM). It's 1-1 relationship between class Person and Address, Sample JSON required for input is 
 
 {
     "personalInfo": {
@@ -14,3 +14,4 @@ This repo shows how Play and Slick integration works. It's 1-1 relationship betw
     }
 }
 
+- I tried to cover validation, proper error handling etc. Still few more enhancements pending
