@@ -86,18 +86,29 @@ object ApplicationController extends Controller {
 
   }
 
+  /**
+   * Create Models, a function with 0 side effect
+   */
+  def fetchModel(json: JsValue): (Person, Address) = {
+    val personAddressModel = json.as[PersonAddress]
+    val r = scala.util.Random
+    val addressModel = personAddressModel.addressModel
+    val address = Address(Some(r.nextInt(100)), addressModel.street, addressModel.city, addressModel.state)
+    val personModel = personAddressModel.personModel
+    val person = Person(Some(r.nextInt(100)), personModel.name, personModel.email, personModel.age, personModel.sex, address.id.get)
+    (person, address)
+  }
+
+  /**
+   * Insert Record
+   */
   def insert = Action(parse.json) { request =>
     val json = request.body
     personAddressReads.reads(json).fold(
       invalid => BadRequest(JsError.toFlatJson(invalid)),
       valid => {
-        val personAddressModel = json.as[PersonAddress]
-        val r = scala.util.Random
-        val addressModel = personAddressModel.addressModel
-        val address = Address(Some(r.nextInt(100)), addressModel.street, addressModel.city, addressModel.state)
-        val personModel = personAddressModel.personModel
-        val person = Person(Some(r.nextInt(100)), personModel.name, personModel.email, personModel.age, personModel.sex, address.id.get)
-        DAO.insert(person, address) match {
+        val models = fetchModel(json)
+        DAO.insert(models._1, models._2) match {
           case Success(x) if (x == 1) => Ok(Json.toJson(Response(200, "Person Created Successfully")))
           case Failure(t: SQLException) if (t.getSQLState == "23000") => Ok(Json.toJson(Response(409, "User already exists in the system")))
           case Failure(x) => Ok(Json.toJson(Response(500, "Internal Server Error")))
